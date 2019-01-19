@@ -1,33 +1,5 @@
 from lxml import html
 import requests
-import pickle
-#import mysql.connector
-
-#mydb = mysql.connector.connect(host="localhost", user="root", passwd="24ShotClock!")
-#mycurser = mydb.cursor()
-#mycurser.execute("show database")
-#for i in mycurser:
-#    print(i)
-
-# def FindWords(filename):
-#     """
-#     Given a filename, opens the file that contains hella words (xlsx, csv, or txt).
-#     Creates a set containing the words in the file.
-#     """
-#     fp = open(filename,"r")
-#     word_list = []
-#     first_line = fp.readline().strip()
-#     if ( (first_line.find(",") == -1) ):
-#         for line in fp:
-#             line = line.strip()
-#             word_list.append(line)
-#     else:
-#         row_list = first_line.strip().split(",")
-#         for word in row_list:
-#             word.strip()
-#             word_list.append(word)
-#     word_set = set(word_list)
-#     return word_set
 
 def GetRhymes(word):
     """
@@ -67,7 +39,6 @@ def CheckDB(word):
     tup = (boolean,line_index,rhyme_set)
     return tup
 
-
 def AddWord(word):
     """
     Uses GetRhymes to create a set of words that rhyme.
@@ -102,48 +73,8 @@ def PrintDB():
         print()
     return 0
 
-# def PullRhyme(word):
-#     """
-#     Uses CheckDB to search the database for a word.
-#     If it finds it:
-#         -Pulls and returns the list of rhymes
-#     If it does not:
-#         -Uses AddWord to add the word (and it's rhymes) to the DB
-#         -Returns a list of rhyming words.
-#     """
-#     rhyme_set = {}
-#     boolean = CheckDB(word)
-#     if (boolean == True):
-#         fp = open("RhymeDB.txt","r")
-#         break_bool = False
-#         for line in fp:
-#             line = line.strip().split(";")
-#             index = -1
-#             for i in line:
-#                 index += 1
-#                 for j in i:
-#                     if (j == word):
-#                         rhyme_list = line[index]
-#                         rhyme_set = set(rhyme_list)
-#                         break_bool = True
-#                         break
-#                     if (break_bool == True):
-#                         break
-#             if (break_bool == True):
-#                 break     
-#         fp.close()
-#     return rhyme_set
-
 
 def main():
-    # filename = "words.csv" #input("Enter a file containing words: ")
-    # word_set = FindWords(filename)
-    #for word in word_set:
-    #    word = word.strip()
-    #    boolean = CheckDB(word)
-    #    if (boolean == False):
-    #        word_added = AddWord(word)
-    #        print(word_added)
     SizeDB = 0
     while True:
         user_input = (input("Enter a word ('q' to quit, cc to clear): ")).strip().lower()

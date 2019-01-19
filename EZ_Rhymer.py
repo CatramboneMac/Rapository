@@ -1,3 +1,24 @@
+###############################################################################
+#
+#   1/18/19
+#   EZ_Rhymer.py
+#   Erich Hairston and Mac Catrambone
+#   
+#   This program intends to assist songwriters in finding words that rhyme.
+#   It uses user input and web scraping to compile a database of rhymes
+#   Ultimately, we would like it to suggest only the top ten most common rhymes
+#   
+#   Things to do:
+#       Try using an Excel file as our database instead of a Text file
+#       Be able to determine the number of words in the database at any time
+#       Always be updating which rhymes are used most frequently
+#       Maybe look into using mySQL for the database
+#       Jump to search instead of looping through
+#       User interface (Make it pretty and easy to use)
+#
+##############################################################################
+
+
 from lxml import html
 import requests
 

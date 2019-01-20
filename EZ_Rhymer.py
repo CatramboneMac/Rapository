@@ -1,7 +1,7 @@
 ###############################################################################
 #
-#   1/18/19
-#   EZ_Rhymer.py
+#   1/19/19
+#   Rapository.py
 #   Erich Hairston and Mac Catrambone
 #   
 #   This program intends to assist songwriters in finding words that rhyme.
@@ -10,9 +10,9 @@
 #   
 #   Things to do:
 #       Try using an Excel file as our database instead of a Text file
-#       Be able to determine the number of words in the database at any time
+#       X Be able to determine the number of words in the database at any time
 #       Always be updating which rhymes are used most frequently
-#       Maybe look into using mySQL for the database
+#       Look into using mySQL for the database
 #       Jump to search instead of looping through
 #       User interface (Make it pretty and easy to use)
 #
@@ -24,7 +24,7 @@ import requests
 
 def GetRhymes(word):
     """
-    Given a word, scrapes the web (Rhymezone.com), to find words that rhyme with it.
+    Given a word, scrapes the web (Rhymezone.com) to find words that rhyme with it.
     Returns a set of words that rhymes.
     """
     url_string = "https://www.rhymezone.com/r/rhyme.cgi?Word=" + str(word).strip() + "&typeofrhyme=perfect&org1=syl&org2=l&org3=y"
@@ -38,7 +38,13 @@ def GetRhymes(word):
 
 def CheckDB(word):
     """
-    Given the set of word made in FindWords, creates a blank dictionary and uses GetRhymes to fill it.
+    Checks for a specific word in our database.
+    Returns a tuple of the form (boolean, index, set)
+    If it finds the word:
+        Retrieves the rhymeset from the database.
+        (True, position in the DB, rhymeset)
+    If it does not:
+        (False, -1, {} )
     """
     fp = open("RhymeDB.txt",'r')
     boolean = False
@@ -79,11 +85,17 @@ def AddWord(word):
     return num_words
 
 def ClearDB():
+    """
+    Clears the database
+    """
     fp = open("RhymeDB.txt", 'w')
     fp.close()
     return 0
 
 def PrintDB():
+    """
+    Prints every rhymeset in the dictionary in an organized manner.
+    """
     fp = open("RhymeDB.txt","r")
     line = fp.readline()
     line = line.strip().strip(";").split(";")
@@ -98,7 +110,7 @@ def PrintDB():
 def main():
     SizeDB = 0
     while True:
-        user_input = (input("Enter a word ('q' to quit, cc to clear): ")).strip().lower()
+        user_input = (input("Enter a word ('q' to quit, 'cc' to clear): ")).strip().lower()
         word = user_input.split()
         if (word[0].strip() == "q"):
             break
@@ -115,27 +127,23 @@ def main():
             tup = CheckDB(word)
             if (tup[0] == True):
                 SizeDB += len(tup[2])
-                print("On file")
-                print("Size of the Database: ", SizeDB)
-                print(tup[2])
+                print("On file\n")
+                print(tup[2],"\n")
+                print("Size of the Database: ", SizeDB, "\n")
             else:
-                print("New word added")
-                word_added = AddWord(word)
+                print("New word added\n")
+                words_added = AddWord(word)
                 tup = CheckDB(word)
                 if (tup[0] == True):
                     SizeDB += len(tup[2])
-                    print("Size of the Database: ", SizeDB)
-                    print(tup[2])
+                    print(tup[2], "\n")
+                    print("Size of the Database: ", SizeDB,"\n")
                 else:
-                    print("Error in CheckDB function")
+                    print("Error in CheckDB function\n")
             continue
-    print()
-    print("----------")
-    print()
+    print("\n----------\n")
     PrintDB()
-    print()
-    print("----------")
-    print()
+    print("\n----------\n")
     print("Size of the Database: ", SizeDB)
     return 0
 
